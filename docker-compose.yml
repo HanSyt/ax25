@@ -1,0 +1,19 @@
+# Create Services
+services:
+  ax25:
+    image: ax25
+    container_name: ax25
+    hostname: ax25
+    network_mode: host # to get ax ports working
+    volumes:
+      - conf:/etc/ax25
+      - var-ax25:/var/ax25
+      - xnet:/opt/xnet
+      - /lib/modules:/lib/modules
+    privileged: true    # needed for ax25 to start properly
+
+# Create Volumes
+volumes:
+  conf:
+  var-ax25:
+  xnet:
