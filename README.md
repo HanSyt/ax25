@@ -16,16 +16,16 @@ Be aware of the dot at the end of the build command.
 
 Check if there are any build errors, if not bring up your container with:
 docker-compose up -d
-Your container should be running. Check "/usr/lib/docker/volumes", you should see ax25-conf and 4 other maps starting with ax25_
+Your container should be running. Check _/usr/lib/docker/volumes_, you should see ax25-conf and 4 other maps starting with ax25_
 
 If you go into ax25_donf/_data you wil see all your ax25 configuaration files, adapt them to your needs, wait with fbb!
 Go to the ax25_startup/_data map and chec ax25.sh adapt this file to you needs, leave fbb behind \#
 
 # openvpn
-If you are in NL and want to use hamnet as a single access point, obtain and openvpn configuration file from pe1chl. It contains all certificats and info that is neede to setup a link with Hamnet. Place this callsign.conf file in the ax25_openvpn/_data  container. That's all. Now restart your container by:
+If you are in NL and want to use Hamnet as a single access point, obtain and openvpn configuration file from pe1chl. It contains all certificats and info that is neede to setup a link with Hamnet. Place this callsign.conf file in the ax25_openvpn/_data  container. That's all. Now restart your container by:
 docker-compose down in the folder where the docker-compose.yml is. And start it with: docker-compose up -d
 
-Now you should have a link to hanmnet and your ax25 stuff should be running.
+Now you should have a link to Hamnet and your ax25 stuff should be running.
 
 # fbb
 Now you want fbb to be running. Go into the container with:
