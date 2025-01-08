@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# verander de naam van dit bestand niet in DOCKER anders start de container niet
+
+# Modules laden on the host in DOCKER
+modprobe ax25
+modprobe mkiss
+modprobe netrom
+
+# openvpn starten
+service openvpn start
+
+# xinetd voor uronode starten
+service xinetd start
+
+# custom startup
+source /opt/startup/*.sh &
+
+
+# Start voltooid, keep docker container alive (als fbb toch gestopt is)
+tail -f /dev/null
