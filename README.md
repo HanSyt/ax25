@@ -11,7 +11,7 @@ And put the files in this repo at the right places.
 # You have docker installed?
 
 Go into the map where you did put the files in and make te container wiht:
-docker build -t ax25 .
+__docker build -t ax25 . __
 Be aware of the dot at the end of the build command.
 
 Check if there are any build errors, if not bring up your container with:
