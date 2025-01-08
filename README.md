@@ -4,7 +4,8 @@ First experiment to create a docker container for native ax25 (incl fbb)
 This is not a stable release so be aware of bugs etc
 
 Make a tree like this:
-![Screenshot_20250108_182739](https://github.com/user-attachments/assets/c45af6ea-eaeb-4c70-98fa-9d2798d1cb74)
+![Screenshot_20250108_201457](https://github.com/user-attachments/assets/185e16ee-3e2b-4c31-8d8d-5db3ec3dbe96)
+
 
 And put the files in this repo at the right places.
 
