@@ -1,6 +1,6 @@
 # basic image for building ax25
 FROM ubuntu
-#FROM debian # make tweice the size of ubuntu
+#FROM debian # make twice the size of ubuntu
 
 # some info
 LABEL description="HAM Radio AX25 experiment"
@@ -22,12 +22,13 @@ RUN apt install -y --install-recommends socat aprsdigi aprx
 RUN useradd -m -s //bin/bash pi && usermod -a -G sudo pi && echo "pi:raspberry" | chpasswd
 
 # this is where we want our config
-VOLUME ["/etc/ax25","/opt","/etc/openvpn"]
+VOLUME ["/etc/ax25","/opt","/etc/openvpn","/var/ax25"]
 EXPOSE 3600 3694 6300 93/udp
 
 # let's copy some needed files
 ADD ./ax25 /etc/ax25
-ADD ./var /var/lib
+ADD ./varl /var/lib
+ADD ./varf /var/ax25
 ADD ./xnet /opt/xnet
 ADD ./xrpi /opt/xrpi
 ADD ./bpq /opt/bpq
@@ -43,3 +44,6 @@ RUN echo "uronode         3694/tcp                        # Node/URONode packet"
 # let's start off as user pi
 WORKDIR /root
 #USER pi
+
+ENTRYPOINT exec /etc/rc.local
+#CMD ["-c"]
