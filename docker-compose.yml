@@ -7,13 +7,14 @@ services:
     network_mode: host # to get ax ports working
     volumes:
       - conf:/etc/ax25
-      - var-ax25:/var/ax25
-      - xnet:/opt/xnet
+      - var:/var/lib
+      - opt:/opt
+      - openvpn:/etc/openvpn
       - /lib/modules:/lib/modules
     privileged: true    # needed for ax25 to start properly
 
-# Create Volumes
 volumes:
   conf:
-  var-ax25:
-  xnet:
+  opt:
+  openvpn:
+  var:
