@@ -16,7 +16,7 @@ Be aware of the dot at the end of the build command.
 
 Check if there are any build errors, if not bring up your container with:
 docker-compose up -d
-Your container should be running. Check /usr/lib/docker/volumes, you should see ax25-conf and 4 other maps starting with ax25_
+Your container should be running. Check "/usr/lib/docker/volumes", you should see ax25-conf and 4 other maps starting with ax25_
 
 If you go into ax25_donf/_data you wil see all your ax25 configuaration files, adapt them to your needs, wait with fbb!
 Go to the ax25_startup/_data map and chec ax25.sh adapt this file to you needs, leave fbb behind \#
