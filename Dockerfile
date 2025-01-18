@@ -4,9 +4,10 @@ FROM ubuntu
 
 # some info
 LABEL description="HAM Radio AX25 experiment"
-LABEL version="0.1"
+LABEL version="0.12"
 LABEL build="Hackberry Lane"
 LABEL email="pe1fam@amsat.org"
+
 
 # update from the external repo
 RUN apt update
