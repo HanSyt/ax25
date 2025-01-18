@@ -39,7 +39,9 @@ type fbb and configuere it like usual (later you can adapt the configuaration fi
 leave the container and go to ax25_opt/startup/_data/ax25.sh and remove the \# before the fbb startup command.
 
 ## Your all set, but it can be better
-However.. you can add bpq, xnet, xrpi as well, use the maps in ax25_opt/_data for it. You can make more shell files in startup to start them (rc.local point to ths map and searches for name.sh. Or add them to your ax25.sh. For paths use /opt/xnet etc.
+This Dockerfile is intended to use on 64bit arm systems (raspbian on rpi 4 or 5), to start 32 bit applications lik xnet, xrpi and bpq, I am installing the armhf architecture as well.
+So you can add bpq, xnet, xrpi, use the maps in ax25_opt/_data for it. You can make more shell files in startup to start them (rc.local point to ths map and searches for name.sh. Or add them to your ax25.sh. For paths use /opt/xnet etc.
+Check the ax25.sh file for startup for xnet and xrpi with screen. Later you can attach to the screen an work with the console if you want to.
 
 # Bugs...
 Probably there are. One is well known, if you put in a command like "docker restart x25", your ax25 stuff (kissattach) is not handling this very well. Instead use: "docker-compose down" and "docker-compose up -d"
