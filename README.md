@@ -50,3 +50,4 @@ Second: if you install docker from the raspberry-pi repos, you will have to use 
 
 ## Base Image
 As you can see I am using __ubuntu__ as a base image, some people like other base images, like __debian__. I have made the docker container with both of them. The debian version was twice in size (269 MB instead of the 137 MB of Ubuntu) but was still missing top, ps and some other commands. Also fbb was not properly starting. 
+However, when adding features like dual architecture arm64 + armhf the size of the container is noww just under 1 GB. No further comparing with debian is done.
