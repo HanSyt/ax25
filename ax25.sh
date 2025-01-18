@@ -45,13 +45,23 @@ sleep 5
 # Netrom deamon
 /usr/sbin/netromd -i &
 
-# XNET
-cd /opt/xnet 
-arch=`arch`
-if [ $arch == "aarch64" ]; then ./xnet_arm7 &
-fi
-if [ $arch == "x86_64" ]; then ./linuxnet &
-fi
+# Sliplink with kernel
+/usr/bin/socat -d -d -ly PTY,link=/var/run/slip PTY,link=/var/run/pils &
+sleep 3
+slattach -s 38400 -p slip /var/run/slip &
+sleep 1
+ifconfig sl0 <host ip> netmask 255.255.255.255 pointopoint <xnet ip> mtu 236 up
+sleep 1
+
+# AMPR net network give host a ham IP
+ifconfig eth0:1 <ham ip> netmask 255.255.255.240 up
+# ip route add -net 44.137.55.0/28 via 44.137.55.1 dev sl0
+
+# Startup XNet
+cd /opt/xnet; screen -d -m ./xnet_arm7
+
+# Startup XRPI (xrouter)
+# cd /opt/xrpi; screen -d -m ./xrpi
 
 # FBB niet met & moet als laatste ktief blijven om docker actief te houden
 #/usr/sbin/fbb
