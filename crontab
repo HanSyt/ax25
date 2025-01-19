@@ -1,0 +1,11 @@
+# add this to crontab to search for unhelthy container and restart is - crontab -e
+* * * * * docker ps -q -f health=unhealthy | xargs docker restart
+
+# And add the healthcehck to docker compose (db0res.ampr.org can only be accessed over hamnet)
+    healthcheck:
+      test: "curl -f http://db0res.ampr.org"
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      start_interval: 5s
