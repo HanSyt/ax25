@@ -12,6 +12,8 @@ services:
       - opt:/opt
       - openvpn:/etc/openvpn
       - /lib/modules:/lib/modules
+    environment:
+      - TZ=Europe/Amsterdam
     privileged: true    # needed for ax25 to start properly
     # this can be removed if your not on hamnet / openvpn or chenge it (see crontab)
     healthcheck:
