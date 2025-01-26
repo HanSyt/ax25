@@ -61,9 +61,11 @@ However, when adding features like dual architecture arm64 + armhf the size of t
 
 # Healthcheck
 You can add a few lines to your docker compose file to check the health of your containers. If the container becomes unhealthe you can restart is with a command:
+```
 */5 * * * * docker ps -q -f health=unhealthy | xargs docker restart
+```
 in the crontab. */5 is every 5 minutes a check, remove the /5 if you want a check every minute.
-
+```yaml annotate
 The docker-compose.yml
     healthcheck:
       # add this to crontabe -e to restart container is hamnet connection fails
@@ -74,6 +76,7 @@ The docker-compose.yml
       retries: 3
       start_period: 40s
       start_interval: 5s
+```
 
 When started with this addition under yur service docker will check if you can reach bla.ampr.org. This is for my connection with HamNet and the url must be available on HamNet only. You can change the test to your personal needs. 
 If you start the container with this option, it states "starting" until the healthcheck is completed. When completed the status should change to: Healthy. You shoud not see "Running" anymore. However if the test results in a false, the container becomes "Unhealthy"  and the crontab command will testart the container.
