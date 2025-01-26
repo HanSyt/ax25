@@ -58,3 +58,23 @@ Gooing for the base image debian:bullsey solved the problem, however with bullse
 ## Base Image
 As you can see I am using __ubuntu__ as a base image, some people like other base images, like __debian__. I have made the docker container with both of them. The debian version was twice in size (269 MB instead of the 137 MB of Ubuntu) but was still missing top, ps and some other commands. Also fbb was not properly starting. 
 However, when adding features like dual architecture arm64 + armhf the size of the container is noww just under 1 GB. No further comparing with debian is done.
+
+# Healthcheck
+You can add a few lines to your docker compose file to check the health of your containers. If the container becomes unhealthe you can restart is with a command:
+*/5 * * * * docker ps -q -f health=unhealthy | xargs docker restart
+in the crontab. */5 is every 5 minutes a check, remove the /5 if you want a check every minute.
+
+The docker-compose.yml
+    healthcheck:
+      # add this to crontabe -e to restart container is hamnet connection fails
+      # * * * * * docker ps -q -f health=unhealthy | xargs docker restart
+      test: "curl -f http://bla.ampr.org"
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      start_interval: 5s
+
+When started with this addition under yur service docker will check if you can reach bla.ampr.org. This is for my connection with HamNet and the url must be available on HamNet only. You can change the test to your personal needs. 
+If you start the container with this option, it states "starting" until the healthcheck is completed. When completed the status should change to: Healthy. You shoud not see "Running" anymore. However if the test results in a false, the container becomes "Unhealthy"  and the crontab command will testart the container.
+When debugging, better not use the heathcheck.
