@@ -48,6 +48,13 @@ Probably there are. One is well known, if you put in a command like "docker rest
 
 Second: if you install docker from the raspberry-pi repos, you will have to use docker-compose. However if you have the docker repos enabled, use docker compose instead (and don't install docker-compose).
 
+# What is the bug?
+After testing the container for about a week and being stable, it was time to move it to a raspberry 5. However... starting xnet ended in a segmentation fault, same with xrpi. Checking the installed packages did not solve the problem. It turned out tha the pi 5 was behaving a bit strange. Tested with debian base image, starting xnet/xrpi was claiming a missching libc.so.6 (libm.so.6), bothe were in the system.
+Gooing for the base image debian:bullsey solved the problem, however with bullsey the openvpn connection failed, stating wrong certificates. Finally using the ubuntu base image: ubuntu:20.04 solved both issues.
+
+![Screenshot_20250126_105132](https://github.com/user-attachments/assets/b51d2378-294f-411d-979d-f79202aaaa6e)
+
+
 ## Base Image
 As you can see I am using __ubuntu__ as a base image, some people like other base images, like __debian__. I have made the docker container with both of them. The debian version was twice in size (269 MB instead of the 137 MB of Ubuntu) but was still missing top, ps and some other commands. Also fbb was not properly starting. 
 However, when adding features like dual architecture arm64 + armhf the size of the container is noww just under 1 GB. No further comparing with debian is done.
