@@ -1,0 +1,63 @@
+# basic image for building ax25
+# Ubuntu works on pi4 but armhf apps have segmentation fault on pi5
+# FROM ubuntu
+# Ubuntu Jammy works on raspberry 5
+FROM ubuntu:22.04
+# Debian works on pi4, not on pi5: 
+# bookworm armhf apps have problems with libc.so.6 or libm.so.6
+# bullsaye does not accept the HamNet openvpn file
+# FROM debian:bookworm
+
+# some info
+LABEL description="HAM Radio AX25 experiment"
+LABEL version="0.13"
+LABEL build="Hackberry Lane"
+LABEL email="pe1fam@amsat.org"
+
+# Make it multiarch for XNet
+RUN dpkg --add-architecture armhf
+
+# Update from the external repo
+RUN apt update && apt upgrade -y && apt autoremove -y
+
+# some extra service needed in container
+RUN apt install -y kmod net-tools telnet xinetd openvpn screen curl procps
+
+# and a timezone would be handy (ENV TZ=Europe/Amsterdam in docker-compose.yml)
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Amsterdam
+RUN apt-get install -y tzdata
+
+# install ax25 stuff
+RUN apt install -y --install-recommends libax25 ax25-apps ax25-tools uronode fbb
+RUN apt install -y --install-recommends socat aprsdigi aprx
+
+# armhf cross platform essential
+RUN apt install -y --install-recommends crossbuild-essential-armhf
+RUN apt install -y --install-recommends libc6:armhf libstdc++6:armhf
+
+# this is where we want our config
+VOLUME ["/etc/ax25","/opt","/etc/openvpn","/var/ax25"]
+EXPOSE 3600 3694 6300 93/udp 1194/udp
+
+# let's copy some needed files
+ADD ./ax25 /etc/ax25
+ADD ./varl /var/lib
+ADD ./varf /var/ax25
+ADD ./xnet /opt/xnet
+ADD ./xrpi /opt/xrpi
+ADD ./bpq /opt/bpq
+ADD ./startup /opt/startup
+ADD ./rc.local /etc/rc.local
+ADD ./ax25.sh /opt/startup/ax25.sh
+
+# Uronode
+ADD ./uronode /etc/xinetd.d
+# services to add
+RUN echo "uronode         3694/tcp                        # Node/URONode packet" >> /etc/services
+
+# let's start off in /opt
+#WORKDIR /opt
+
+## It starts
+CMD /etc/rc.local
